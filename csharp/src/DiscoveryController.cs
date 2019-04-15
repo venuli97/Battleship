@@ -36,7 +36,7 @@ static class DiscoveryController
 	/// </summary>
 	private static void DoAttack()
 	{
-		Point2D mouse;
+		Point2D mouse = default(Point2D);
 
 		mouse = SwinGame.MousePosition();
 

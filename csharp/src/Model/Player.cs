@@ -14,12 +14,13 @@ public class Player : IEnumerable<Ship>
 
 	protected static Random _Random = new Random();
 	private Dictionary<ShipName, Ship> _Ships = new Dictionary<ShipName, Ship>();
-	private SeaGrid _playerGrid = new SeaGrid(_Ships);
+	private SeaGrid _playerGrid;
 	private ISeaGrid _enemyGrid;
-	protected BattleShipsGame _game;
 
+	protected BattleShipsGame _game;
 	private int _shots;
 	private int _hits;
+
 	private int _misses;
 	/// <summary>
 	/// Returns the game that the player is part of.
@@ -42,6 +43,7 @@ public class Player : IEnumerable<Ship>
 	public Player(BattleShipsGame controller)
 	{
 		_game = controller;
+		_playerGrid = new SeaGrid(_Ships);
 
 		//for each ship add the ships name so the seagrid knows about them
 		foreach (ShipName name in Enum.GetValues(typeof(ShipName))) {
@@ -88,12 +90,12 @@ public class Player : IEnumerable<Ship>
 	/// <returns>The ship with the indicated name</returns>
 	/// <remarks>The none ship returns nothing/null</remarks>
 	public Ship Ship(ShipName name) {
-        get {
-            if (name == ShipName.None)
-                return null;
-            /* TODO Change to default(_) if this is not a reference type */
-            return _Ships[name];
-        }
+
+		if (name == ShipName.None)
+			return null;
+
+		return _Ships[name];
+
 	}
 
 	/// <summary>
@@ -169,8 +171,7 @@ public class Player : IEnumerable<Ship>
 	{
 		//human does nothing here...
 		return null;
-        /* TODO Change to default(_) if this is not a reference type */
-    }
+	}
 
 	/// <summary>
 	/// Shoot at a given row/column
@@ -181,7 +182,7 @@ public class Player : IEnumerable<Ship>
 	internal AttackResult Shoot(int row, int col)
 	{
 		_shots += 1;
-		AttackResult result;
+		AttackResult result = default(AttackResult);
 		result = EnemyGrid.HitTile(row, col);
 
 		switch (result.Value) {
@@ -199,8 +200,8 @@ public class Player : IEnumerable<Ship>
 
 	public virtual void RandomizeDeployment()
 	{
-		bool placementSuccessful;
-		Direction heading;
+		bool placementSuccessful = false;
+		Direction heading = default(Direction);
 
 		//for each ship to deploy in shipist
 
@@ -215,6 +216,8 @@ public class Player : IEnumerable<Ship>
 				int dir = _Random.Next(2);
 				int x = _Random.Next(0, 11);
 				int y = _Random.Next(0, 11);
+
+
 				if (dir == 0) {
 					heading = Direction.UpDown;
 				} else {
