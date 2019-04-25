@@ -82,6 +82,9 @@
     </None>
     <WinLibs Include="lib\win32\*.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\sounds\bg_music.mp3" />
+  </ItemGroup>
   <Target Name="CopyLibsToOut">
     <Copy SourceFiles="@(WinLibs)" DestinationFolder="$(OutDir)" />
   </Target>
