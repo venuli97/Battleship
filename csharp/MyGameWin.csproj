@@ -80,6 +80,7 @@
     <None Include="Resources\**\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\fonts\impossible_regular.ttf" />
     <WinLibs Include="lib\win32\*.dll" />
   </ItemGroup>
   <ItemGroup>
