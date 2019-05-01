@@ -182,12 +182,22 @@ public class SeaGrid : ISeaGrid
 				return new AttackResult(ResultOfAttack.Miss, "missed", row, col);
 			}
 
-			//all ship's tiles have been destroyed
-			if (_GameTiles[row, col].Ship.IsDestroyed) {
-				_GameTiles[row, col].Shot = true;
-				_ShipsKilled += 1;
-				return new AttackResult(ResultOfAttack.Destroyed, _GameTiles[row, col].Ship, "destroyed the enemy's", row, col);
-			}
+            //all ship's tiles have been destroyed
+            if (_GameTiles[row, col].Ship.IsDestroyed)
+            {
+                _GameTiles[row, col].Shot = true;
+                _ShipsKilled += 1;
+                //	return new AttackResult(ResultOfAttack.Destroyed, _GameTiles[row, col].Ship, "destroyed the enemy's", row, col);
+                //}
+                if (object.Equals(GameController.ComputerPlayer, GameController.HumanPlayer))
+                {
+                    return new AttackResult(ResultOfAttack.Destroyed, _GameTiles[row, col].Ship, "destroyed the enemy's", row, col);
+                }
+                else
+                {
+                    return new AttackResult(ResultOfAttack.Destroyed, _GameTiles[row, col].Ship, "destroyed your", row, col);
+                }
+            }
 
 			//else hit but not destroyed
 			return new AttackResult(ResultOfAttack.Hit, "hit something!", row, col);
