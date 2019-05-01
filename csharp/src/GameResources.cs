@@ -12,11 +12,12 @@ public static class GameResources
 
 	private static void LoadFonts()
 	{
-		NewFont("ArialLarge", "arial.ttf", 80);
-		NewFont("Courier", "cour.ttf", 14);
-		NewFont("CourierSmall", "cour.ttf", 8);
-		NewFont("Menu", "ffaccess.ttf", 8);
-	}
+        NewFont("ArialLarge", "arial.ttf", 80);
+        NewFont("Courier", "cour.ttf", 14);
+        NewFont("CourierSmall", "cour.ttf", 8);
+        NewFont("Menu", "impossible_regular.ttf", 24);
+        NewFont("Score", "ffaccess.ttf", 12);
+    }
 
 	private static void LoadImages()
 	{
