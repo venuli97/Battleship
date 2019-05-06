@@ -12,8 +12,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <OutputType>Exe</OutputType>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Battleship.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -84,6 +83,7 @@
     <WinLibs Include="lib\win32\*.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Battleship.ico" />
     <Content Include="Resources\sounds\bg_music.mp3" />
   </ItemGroup>
   <Target Name="CopyLibsToOut">
