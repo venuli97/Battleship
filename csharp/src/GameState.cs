@@ -1,4 +1,4 @@
-
+    
 using Microsoft.VisualBasic;
 using System;
 using System.Collections;
@@ -53,8 +53,13 @@ public enum GameState
 	/// </summary>
 	EndingGame,
 
-	/// <summary>
-	/// The player has quit. Show ending credits and terminate the game
-	/// </summary>
-	Quitting
+    /// <summary>
+    /// The player is altering the color settings
+    /// </summary>
+    AlteringColor,
+
+    /// <summary>
+    /// The player has quit. Show ending credits and terminate the game
+    /// </summary>
+    Quitting
 }

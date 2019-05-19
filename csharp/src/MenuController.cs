@@ -28,7 +28,8 @@ static class MenuController
 			"SETUP",
 			"SCORES",
             "MUSIC",
-			"QUIT"
+			"QUIT",
+            "COLOR"
 		},
 		new string[] {
 			"RETURN",
@@ -44,9 +45,14 @@ static class MenuController
         {
             "ON",
             "OFF"
+        },
+        new string[] {
+            "BLUE",
+            "YELLOW",
+            "GREEN"
         }
 
-	};
+    };
 	private const int MENU_TOP = 575;
 	private const int MENU_LEFT = 30;
 	private const int MENU_GAP = 0;
@@ -60,14 +66,17 @@ static class MenuController
 	private const int SETUP_MENU = 2;
     private const int MUSIC_MENU = 3;
 
-	private const int MAIN_MENU_PLAY_BUTTON = 0;
+    private const int COLOR_MENU = 4;
+
+    private const int MAIN_MENU_PLAY_BUTTON = 0;
 	private const int MAIN_MENU_SETUP_BUTTON = 1;
 	private const int MAIN_MENU_TOP_SCORES_BUTTON = 2;
     private const int MAIN_MENU_MUSIC_BUTTON = 3;
 	private const int MAIN_MENU_QUIT_BUTTON = 4;
 
+    private const int MAIN_MENU_COLOR_BUTTON = 5;
 
-	private const int SETUP_MENU_EASY_BUTTON = 0;
+    private const int SETUP_MENU_EASY_BUTTON = 0;
 	private const int SETUP_MENU_MEDIUM_BUTTON = 1;
     private const int SETUP_MENU_HARD_BUTTON = 2;
 	private const int SETUP_MENU_EXIT_BUTTON = 3;
@@ -79,9 +88,18 @@ static class MenuController
 	private const int GAME_MENU_SURRENDER_BUTTON = 1;
 
 	private const int GAME_MENU_QUIT_BUTTON = 2;
-	private static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
+    //private static readonly Color MENU_COLOR = SwinGame.RGBAColor(2, 167, 252, 255);
+    private const int COLOR_MENU_BLUE_BUTTON = 0;
+    private const int COLOR_MENU_YELLOW_BUTTON = 1;
+    private const int COLOR_MENU_GREEN_BUTTON = 2;
 
-	private static readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
+    private static Color COLOR_BLUE = SwinGame.RGBAColor(2, 167, 252, 255);
+    private static Color COLOR_YELLOW = SwinGame.RGBAColor(239, 239, 83, 255);
+    private static Color COLOR_GREEN = SwinGame.RGBAColor(103, 226, 72, 255);
+
+    private static Color MENU_COLOR = COLOR_BLUE;
+
+    private static readonly Color HIGHLIGHT_COLOR = SwinGame.RGBAColor(1, 57, 86, 255);
 	/// <summary>
 	/// Handles the processing of user input when the main menu is showing
 	/// </summary>
@@ -123,14 +141,29 @@ static class MenuController
 		HandleMenuInput(GAME_MENU, 0, 0);
 	}
 
-	/// <summary>
-	/// Handles input for the specified menu.
-	/// </summary>
-	/// <param name="menu">the identifier of the menu being processed</param>
-	/// <param name="level">the vertical level of the menu</param>
-	/// <param name="xOffset">the xoffset of the menu</param>
-	/// <returns>false if a clicked missed the buttons. This can be used to check prior menus.</returns>
-	private static bool HandleMenuInput(int menu, int level, int xOffset)
+    /// <summary>
+    /// Handles the processing of user input when the main menu is showing
+    /// Player can choose the color of the menu
+    /// </summary>
+    public static void HandleColorMenuInput()
+    {
+        bool handled = false;
+        handled = HandleMenuInput(COLOR_MENU, 1, 4);
+
+        if (!handled)
+        {
+            HandleMenuInput(MAIN_MENU, 0, 0);
+        }
+    }
+
+    /// <summary>
+    /// Handles input for the specified menu.
+    /// </summary>
+    /// <param name="menu">the identifier of the menu being processed</param>
+    /// <param name="level">the vertical level of the menu</param>
+    /// <param name="xOffset">the xoffset of the menu</param>
+    /// <returns>false if a clicked missed the buttons. This can be used to check prior menus.</returns>
+    private static bool HandleMenuInput(int menu, int level, int xOffset)
 	{
 		if (SwinGame.KeyTyped(KeyCode.vk_ESCAPE)) {
 			GameController.EndCurrentState();
@@ -192,6 +225,22 @@ static class MenuController
 		DrawButtons(MAIN_MENU);
 		DrawButtons(SETUP_MENU, 1, 1);
 	}
+
+    /// <summary>
+    /// Draws the color menu to the screen.
+    /// </summary>
+    /// <remarks>
+    /// Also shows the main menu
+    /// </remarks>
+    public static void DrawColor()
+    {
+        //Clears the Screen to Black
+        //SwinGame.DrawText("Settings", Color.White, GameFont("ArialLarge"), 50, 50)
+
+        DrawButtons(MAIN_MENU);
+        DrawButtons(COLOR_MENU, 1, 4);
+
+    }
 
     public static void DrawMusicSettings()
     {
@@ -282,7 +331,10 @@ static class MenuController
             case MUSIC_MENU:
                 PerformMusicMenuAction(button);
                 break;
-		}
+            case COLOR_MENU:
+                PerformColorMenuAction(button);
+                break;
+        }
 	}
 
 	/// <summary>
@@ -307,7 +359,10 @@ static class MenuController
 			case MAIN_MENU_QUIT_BUTTON:
 				GameController.EndCurrentState();
 				break;
-		}
+            case MAIN_MENU_COLOR_BUTTON:
+                GameController.AddNewState(GameState.AlteringColor);
+                break;
+        }
 	}
 
 	/// <summary>
@@ -364,6 +419,28 @@ static class MenuController
                 SwinGame.PauseMusic();
                 break;
         }
+        GameController.EndCurrentState();
+    }
+
+    /// <summary>
+    /// The color menu was clicked, perform the button's action.
+    /// </summary>
+    /// <param name="button">the button pressed</param>
+    private static void PerformColorMenuAction(int button)
+    {
+        switch (button)
+        {
+            case COLOR_MENU_BLUE_BUTTON:
+                MENU_COLOR = COLOR_BLUE;
+                break;
+            case COLOR_MENU_YELLOW_BUTTON:
+                MENU_COLOR = COLOR_YELLOW;
+                break;
+            case COLOR_MENU_GREEN_BUTTON:
+                MENU_COLOR = COLOR_GREEN;
+                break;
+        }
+        //Always end state - handles exit button as well
         GameController.EndCurrentState();
     }
 }

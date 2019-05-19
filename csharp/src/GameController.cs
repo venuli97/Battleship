@@ -1,4 +1,3 @@
-
 using Microsoft.VisualBasic;
 using System;
 using System.Collections;
@@ -286,6 +285,9 @@ public static class GameController
 			case GameState.AlteringSettings:
 				MenuController.HandleSetupMenuInput();
 				break;
+            case GameState.AlteringColor:
+                MenuController.HandleColorMenuInput();
+                break;
             case GameState.AlteringMusic:
                 MenuController.HandleMusicMenuInput();
                 break;
@@ -326,6 +328,9 @@ public static class GameController
 			case GameState.AlteringSettings:
 				MenuController.DrawSettings();
 				break;
+            case GameState.AlteringColor:
+                MenuController.DrawColor();
+                break;
             case GameState.AlteringMusic:
                 MenuController.DrawMusicSettings();
                 break;
