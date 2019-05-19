@@ -33,10 +33,15 @@ public enum GameState
 	/// </summary>
 	AlteringSettings,
 
-	/// <summary>
-	/// Players are deploying their ships
+    /// <summary>
+	/// The player is altering the music settings
 	/// </summary>
-	Deploying,
+	AlteringMusic,
+
+    /// <summary>
+    /// Players are deploying their ships
+    /// </summary>
+    Deploying,
 
 	/// <summary>
 	/// Players are attempting to locate each others ships
